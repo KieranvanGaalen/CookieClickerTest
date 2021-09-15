@@ -3,8 +3,6 @@ import React, { useState, useEffect } from "react";
 var cookies = 0;
 var cps = 0;
 
-var gameTickFrequence = 24;
-
 // Buildings
 var cursor;
 var grandma;
@@ -18,21 +16,26 @@ var generators;
 
 
 function App() {
-  cursor = new Generator(15, 0.1, "cursor");
-  grandma = new Generator(100, 1, "grandma");
-  farm = new Generator(1100, 8, "farm");
-  mine = new Generator(12000, 47, "mine");
-  factory = new Generator(130000, 260, "factory");
-  bank = new Generator(1400000, 1400, "bank");
-  temple = new Generator(20000000, 7800, "temple");
+  cursor = new Generator(15, 0.1, 1, "cursor");
+  grandma = new Generator(100, 1, 1, "grandma");
+  farm = new Generator(1100, 8, 1, "farm");
+  mine = new Generator(12000, 47, 1, "mine");
+  factory = new Generator(130000, 260, 1, "factory");
+  bank = new Generator(1400000, 1400, 1, "bank");
+  temple = new Generator(20000000, 7800, 1, "temple");
 
   generators = [cursor, grandma, farm, mine, factory, bank, temple];
 
   useEffect(() => {
     setInterval(() => {
-      UpdateCookies();
-    }, 1000/gameTickFrequence);
+      UpdateView();
+    }, 1000/30);
   }, []);
+
+  for (var i = 0; i < generators.length; i++)
+  {
+    GeneratorUpdate(generators[i])
+  }
 
   return (
     <div className="App">
@@ -56,7 +59,7 @@ function App() {
 
 class Generator 
 {
-  constructor(basePrice, baseProduction, name)
+  constructor(basePrice, baseProduction, interval, name)
   {
     this.name = name;
     this.basePrice = basePrice;
@@ -65,7 +68,17 @@ class Generator
     this.baseProduction = baseProduction;
     this.productionModifier = 1;
     this.production = baseProduction;
+    this.interval = interval
   }
+}
+
+function GeneratorUpdate(generator)
+{
+  useEffect(() => {
+    setInterval(() => {
+      AddToCookies(generator.production);
+    }, generator.interval);
+  }, []);
 }
 
 function BuyGenerator(generator)
@@ -127,8 +140,6 @@ var lastUpdate = Date.now();
 var coockieStashLowCps = 0;
 function UpdateCookies()
 {
-  UpdateView()
-
   var now = Date.now();
   var dt = (now - lastUpdate)/1000;
   lastUpdate = now;
@@ -139,6 +150,7 @@ function UpdateCookies()
     AddToCookies(coockieStashLowCps)
     coockieStashLowCps = 0;
   }
+  
 }
 
 function ClickCookie() {
