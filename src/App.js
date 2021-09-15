@@ -4,13 +4,7 @@ var cookies = 0;
 var cps = 0;
 
 // Buildings
-var cursor;
-var grandma;
-var farm;
-var mine;
-var factory;
-var bank;
-var temple;
+var cursor, grandma, factory, mine, shipment, alchemy_lab, portal, time_machine;
 
 var generators;
 
@@ -19,14 +13,15 @@ var gameTickDelta = 1000/60;
 
 function App() {
   cursor = new Generator(15, 1, 5000, "cursor");
-  grandma = new Generator(100, 1, 1000, "grandma");
-  farm = new Generator(1100, 8, 1000, "farm");
-  mine = new Generator(12000, 47, 1000, "mine");
-  factory = new Generator(130000, 260, 1000, "factory");
-  bank = new Generator(1400000, 1400, 1000, "bank");
-  temple = new Generator(20000000, 7800, 1000, "temple");
+  grandma = new Generator(100, 4, 5000, "grandma");
+  factory = new Generator(500, 20, 5000, "factory", 1);
+  mine = new Generator(2000, 50, 5000, "mine", 2);
+  shipment = new Generator(7000, 100, 5000, "shipment", 3);
+  alchemy_lab = new Generator(50000, 500, 5000, "alchemy lab", 4);
+  portal = new Generator(1000000, 6666, 5000, "portal", 5);
+  time_machine = new Generator(123456000, 123456, 5000, "time machine", 6);
 
-  generators = [cursor, grandma, farm, mine, factory, bank, temple];
+  generators = [cursor, grandma, factory, mine, shipment, alchemy_lab, portal, time_machine];
 
   useEffect(() => {
     setInterval(() => {
@@ -47,13 +42,16 @@ function App() {
         <p id="cps">{cps} Cookies per Second</p>
 
         <button type="button" onClick={ClickCookie}>Cookies</button>
-        <button id="cursorbutton" type="button" onClick={() => BuyGenerator(cursor)}>{cursor.count} {cursor.name} ({cursor.price})</button>
-        <button hidden id="grandmabutton" type="button" onClick={() => BuyGenerator(grandma)}>{grandma.count} {grandma.name} ({grandma.price})</button>
-        <button hidden id="farmbutton" type="button" onClick={() => BuyGenerator(farm)}>{farm.count} {farm.name} ({farm.price})</button>
-        <button hidden id="minebutton" type="button" onClick={() => BuyGenerator(mine)}>{mine.count} {mine.name} ({mine.price})</button>
-        <button hidden id="factorybutton" type="button" onClick={() => BuyGenerator(factory)}>{factory.count} {factory.name} ({factory.price})</button>
-        <button hidden id="bankbutton" type="button" onClick={() => BuyGenerator(bank)}>{bank.count} {bank.name} ({bank.price})</button>
-        <button hidden id="templebutton" type="button" onClick={() => BuyGenerator(temple)}>{temple.count} {temple.name} ({temple.price})</button>
+        <div>
+          <button id="cursorbutton" type="button" onClick={() => BuyGenerator(cursor)}>{cursor.count} {cursor.name} ({cursor.price})</button>
+          <button hidden id="grandmabutton" type="button" onClick={() => BuyGenerator(grandma)}>{grandma.count} {grandma.name} ({grandma.price})</button>
+          <button hidden id="factorybutton" type="button" onClick={() => BuyGenerator(factory)}>{factory.count} {factory.name} ({factory.price})</button>
+          <button hidden id="minebutton" type="button" onClick={() => BuyGenerator(mine)}>{mine.count} {mine.name} ({mine.price})</button>
+          <button hidden id="shipmentbutton" type="button" onClick={() => BuyGenerator(shipment)}>{shipment.count} {shipment.name} ({shipment.price})</button>
+          <button hidden id="alchemy labbutton" type="button" onClick={() => BuyGenerator(alchemy_lab)}>{alchemy_lab.count} {alchemy_lab.name} ({alchemy_lab.price})</button>
+          <button hidden id="portalbutton" type="button" onClick={() => BuyGenerator(portal)}>{portal.count} {portal.name} ({portal.price})</button>
+          <button hidden id="time machinebutton" type="button" onClick={() => BuyGenerator(time_machine)}>{time_machine.count} {time_machine.name} ({time_machine.price})</button>
+        </div>
       </body>
     </div>
   );
@@ -61,51 +59,34 @@ function App() {
 
 class Generator 
 {
-  constructor(basePrice, baseProduction, interval, name)
+  constructor(basePrice, baseProduction, interval, name, grandmaboostamount = 0)
   {
     this.name = name;
     this.basePrice = basePrice;
     this.price = basePrice;
     this.count = 0;
     this.baseProduction = baseProduction;
-    this.productionModifier = 1;
     this.production = baseProduction;
     this.interval = interval
     this.clickProgress = 0;
+    this.grandmaboostamount = grandmaboostamount;
   }
-}
-
-function SetGeneratorUpdate(generator)
-{
-  console.log(generator.production)
-  useEffect(() => {
-    setInterval(() => {
-      GeneratorUpdate(generator);
-    }, generator.interval);
-  }, []);
-}
-
-function GeneratorUpdate(generator)
-{
-  AddToCookies(generator.production * generator.count);
 }
 
 function BuyGenerator(generator)
 {
-  console.log(generator.count)
   if (cookies >= generator.price)
     {
+      if (generator.count == 0)
+      {
+          grandma.production += generator.grandmaboostamount;
+      }
       AddToCookies(-generator.price);
       generator.count++;
-      generator.price = Math.round(generator.basePrice * Math.pow(1.1, generator.count));
+      generator.price = Math.ceil(generator.price * 1.1);
       cps = CalculateCPS();
       UpdateCounters();
     }
-}
-
-function UpdateView()
-{
-  UpdateCounters();
 }
 
 function UpdateCounters()
@@ -153,8 +134,6 @@ function UpdateCookies()
   var dt = (now - lastUpdate); // ms
   lastUpdate = now;
 
-  UpdateView();
-
   generators.forEach(generator => {
     if (generator.count > 0)
     {
@@ -167,7 +146,8 @@ function UpdateCookies()
       generator.clickProgress %= 1;
     }
   });
-  
+
+  UpdateCounters();
 }
 
 function ClickCookie() {

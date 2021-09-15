@@ -24,3 +24,5 @@ yarn-error.log*
 .vs/slnx.sqlite
 .vs/VSWorkspaceState.json
 .vs/myfirstreact/v16/.suo
+yarn.lock
+package-lock.json
