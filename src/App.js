@@ -4,7 +4,6 @@ var cookies = 0;
 var cps = 0;
 
 var gameTickFrequence = 24;
-var maxDisplayFrequence = 30;
 
 // Buildings
 var cursor;
@@ -35,12 +34,6 @@ function App() {
     }, 1000/gameTickFrequence);
   }, []);
 
-  useEffect(() => {
-    setInterval(() => {
-      UpdateView();
-    }, 1000/maxDisplayFrequence);
-  }, []);
-
   return (
     <div className="App">
       <body>
@@ -50,12 +43,12 @@ function App() {
 
         <button type="button" onClick={ClickCookie}>Cookies</button>
         <button id="cursorbutton" type="button" onClick={() => BuyGenerator(cursor)}>{cursor.count} {cursor.name} ({cursor.price})</button>
-        <button id="grandmabutton" type="button" onClick={() => BuyGenerator(grandma)}>{grandma.count} {grandma.name} ({grandma.price})</button>
-        <button id="farmbutton" type="button" onClick={() => BuyGenerator(farm)}>{farm.count} {farm.name} ({farm.price})</button>
-        <button id="minebutton" type="button" onClick={() => BuyGenerator(mine)}>{mine.count} {mine.name} ({mine.price})</button>
-        <button id="factorybutton" type="button" onClick={() => BuyGenerator(factory)}>{factory.count} {factory.name} ({factory.price})</button>
-        <button id="bankbutton" type="button" onClick={() => BuyGenerator(bank)}>{bank.count} {bank.name} ({bank.price})</button>
-        <button id="templebutton" type="button" onClick={() => BuyGenerator(temple)}>{temple.count} {temple.name} ({temple.price})</button>
+        <button hidden id="grandmabutton" type="button" onClick={() => BuyGenerator(grandma)}>{grandma.count} {grandma.name} ({grandma.price})</button>
+        <button hidden id="farmbutton" type="button" onClick={() => BuyGenerator(farm)}>{farm.count} {farm.name} ({farm.price})</button>
+        <button hidden id="minebutton" type="button" onClick={() => BuyGenerator(mine)}>{mine.count} {mine.name} ({mine.price})</button>
+        <button hidden id="factorybutton" type="button" onClick={() => BuyGenerator(factory)}>{factory.count} {factory.name} ({factory.price})</button>
+        <button hidden id="bankbutton" type="button" onClick={() => BuyGenerator(bank)}>{bank.count} {bank.name} ({bank.price})</button>
+        <button hidden id="templebutton" type="button" onClick={() => BuyGenerator(temple)}>{temple.count} {temple.name} ({temple.price})</button>
       </body>
     </div>
   );
@@ -130,10 +123,17 @@ function AddToCookies(num)
   cookies = Math.round(cookies * 10) / 10;
 }
 
+var lastUpdate = Date.now();
 var coockieStashLowCps = 0;
 function UpdateCookies()
 {
-  coockieStashLowCps += cps/gameTickFrequence
+  UpdateView()
+
+  var now = Date.now();
+  var dt = (now - lastUpdate)/1000;
+  lastUpdate = now;
+
+  coockieStashLowCps += cps* dt
   if (coockieStashLowCps >= 1)
   {
     AddToCookies(coockieStashLowCps)
