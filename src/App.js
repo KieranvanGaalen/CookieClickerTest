@@ -41,7 +41,12 @@ function App() {
 
         <p id="cps">{cps} Cookies per Second</p>
 
-        <button type="button" onClick={ClickCookie}>Cookies</button>
+        <input 
+        type="image" 
+        src="https://static.hanos.com/sys-master/productimages/h39/hb7/9255815512094/33200290_lev_b.jpg_914Wx914H" 
+        onClick={ClickCookie}
+        width = "169"
+        height= "169" /> 
         <div>
           <button id="cursorbutton" type="button" onClick={() => BuyGenerator(cursor)}>{cursor.count} {cursor.name} ({cursor.price})</button>
           <button hidden id="grandmabutton" type="button" onClick={() => BuyGenerator(grandma)}>{grandma.count} {grandma.name} ({grandma.price})</button>
