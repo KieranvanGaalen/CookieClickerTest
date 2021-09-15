@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 var cookies = 0;
 var cps = 0;
 
-var gameTickFrequence = 1;
+var gameTickFrequence = 24;
 var maxDisplayFrequence = 30;
 
 // Buildings
@@ -130,9 +130,15 @@ function AddToCookies(num)
   cookies = Math.round(cookies * 10) / 10;
 }
 
+var coockieStashLowCps = 0;
 function UpdateCookies()
 {
-  AddToCookies(cps)
+  coockieStashLowCps += cps/gameTickFrequence
+  if (coockieStashLowCps >= 1)
+  {
+    AddToCookies(coockieStashLowCps)
+    coockieStashLowCps = 0;
+  }
 }
 
 function ClickCookie() {
