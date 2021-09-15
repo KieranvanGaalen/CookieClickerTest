@@ -14,28 +14,30 @@ var temple;
 
 var generators;
 
+var gameTickDelta = 1000/60;
+
 
 function App() {
-  cursor = new Generator(15, 0.1, 1, "cursor");
-  grandma = new Generator(100, 1, 1, "grandma");
-  farm = new Generator(1100, 8, 1, "farm");
-  mine = new Generator(12000, 47, 1, "mine");
-  factory = new Generator(130000, 260, 1, "factory");
-  bank = new Generator(1400000, 1400, 1, "bank");
-  temple = new Generator(20000000, 7800, 1, "temple");
+  cursor = new Generator(15, 1, 5000, "cursor");
+  grandma = new Generator(100, 1, 1000, "grandma");
+  farm = new Generator(1100, 8, 1000, "farm");
+  mine = new Generator(12000, 47, 1000, "mine");
+  factory = new Generator(130000, 260, 1000, "factory");
+  bank = new Generator(1400000, 1400, 1000, "bank");
+  temple = new Generator(20000000, 7800, 1000, "temple");
 
   generators = [cursor, grandma, farm, mine, factory, bank, temple];
 
   useEffect(() => {
     setInterval(() => {
-      UpdateView();
-    }, 1000/30);
+      UpdateCookies();
+    }, gameTickDelta);
   }, []);
 
-  for (var i = 0; i < generators.length; i++)
-  {
-    GeneratorUpdate(generators[i])
-  }
+  //for (var i = 0; i < generators.length; i++)
+  //{
+  //  SetGeneratorUpdate(generators[i])
+  //}
 
   return (
     <div className="App">
@@ -69,16 +71,23 @@ class Generator
     this.productionModifier = 1;
     this.production = baseProduction;
     this.interval = interval
+    this.clickProgress = 0;
   }
+}
+
+function SetGeneratorUpdate(generator)
+{
+  console.log(generator.production)
+  useEffect(() => {
+    setInterval(() => {
+      GeneratorUpdate(generator);
+    }, generator.interval);
+  }, []);
 }
 
 function GeneratorUpdate(generator)
 {
-  useEffect(() => {
-    setInterval(() => {
-      AddToCookies(generator.production);
-    }, generator.interval);
-  }, []);
+  AddToCookies(generator.production * generator.count);
 }
 
 function BuyGenerator(generator)
@@ -88,7 +97,7 @@ function BuyGenerator(generator)
     {
       AddToCookies(-generator.price);
       generator.count++;
-      generator.price = Math.round(generator.basePrice * Math.pow(1.15, generator.count));
+      generator.price = Math.round(generator.basePrice * Math.pow(1.1, generator.count));
       cps = CalculateCPS();
       UpdateCounters();
     }
@@ -125,7 +134,7 @@ function CalculateCPS()
   var cpsGuess = 0;
   for (var i = 0; i < generators.length; i++)
   {
-    cpsGuess += generators[i].count * generators[i].production
+    cpsGuess += generators[i].count * generators[i].production / (generators[i].interval/1000)
   }
   return Math.round((cpsGuess) * 10) / 10;
 }
@@ -141,15 +150,23 @@ var coockieStashLowCps = 0;
 function UpdateCookies()
 {
   var now = Date.now();
-  var dt = (now - lastUpdate)/1000;
+  var dt = (now - lastUpdate); // ms
   lastUpdate = now;
 
-  coockieStashLowCps += cps* dt
-  if (coockieStashLowCps >= 1)
-  {
-    AddToCookies(coockieStashLowCps)
-    coockieStashLowCps = 0;
-  }
+  UpdateView();
+
+  generators.forEach(generator => {
+    if (generator.count > 0)
+    {
+      generator.clickProgress += dt / (generator.interval / generator.count)
+    }
+    if (generator.clickProgress >= 1)
+    {
+      var clickCount = Math.floor(generator.clickProgress)
+      AddToCookies(clickCount*generator.production)
+      generator.clickProgress %= 1;
+    }
+  });
   
 }
 
