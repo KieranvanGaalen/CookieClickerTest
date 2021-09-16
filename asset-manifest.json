@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "//CookieClickerTest/static/css/main.f1bd67f7.chunk.css",
-    "main.js": "//CookieClickerTest/static/js/main.48c4a24c.chunk.js",
-    "main.js.map": "//CookieClickerTest/static/js/main.48c4a24c.chunk.js.map",
-    "runtime-main.js": "//CookieClickerTest/static/js/runtime-main.0599430e.js",
-    "runtime-main.js.map": "//CookieClickerTest/static/js/runtime-main.0599430e.js.map",
-    "static/js/2.9b71943b.chunk.js": "//CookieClickerTest/static/js/2.9b71943b.chunk.js",
-    "static/js/2.9b71943b.chunk.js.map": "//CookieClickerTest/static/js/2.9b71943b.chunk.js.map",
-    "static/js/3.9d3e767b.chunk.js": "//CookieClickerTest/static/js/3.9d3e767b.chunk.js",
-    "static/js/3.9d3e767b.chunk.js.map": "//CookieClickerTest/static/js/3.9d3e767b.chunk.js.map",
-    "index.html": "//CookieClickerTest/index.html",
-    "static/css/main.f1bd67f7.chunk.css.map": "//CookieClickerTest/static/css/main.f1bd67f7.chunk.css.map",
-    "static/js/2.9b71943b.chunk.js.LICENSE.txt": "//CookieClickerTest/static/js/2.9b71943b.chunk.js.LICENSE.txt"
+    "main.css": "/CookieClickerTest/static/css/main.f1bd67f7.chunk.css",
+    "main.js": "/CookieClickerTest/static/js/main.48c4a24c.chunk.js",
+    "main.js.map": "/CookieClickerTest/static/js/main.48c4a24c.chunk.js.map",
+    "runtime-main.js": "/CookieClickerTest/static/js/runtime-main.6d9222ff.js",
+    "runtime-main.js.map": "/CookieClickerTest/static/js/runtime-main.6d9222ff.js.map",
+    "static/js/2.9b71943b.chunk.js": "/CookieClickerTest/static/js/2.9b71943b.chunk.js",
+    "static/js/2.9b71943b.chunk.js.map": "/CookieClickerTest/static/js/2.9b71943b.chunk.js.map",
+    "static/js/3.9d3e767b.chunk.js": "/CookieClickerTest/static/js/3.9d3e767b.chunk.js",
+    "static/js/3.9d3e767b.chunk.js.map": "/CookieClickerTest/static/js/3.9d3e767b.chunk.js.map",
+    "index.html": "/CookieClickerTest/index.html",
+    "static/css/main.f1bd67f7.chunk.css.map": "/CookieClickerTest/static/css/main.f1bd67f7.chunk.css.map",
+    "static/js/2.9b71943b.chunk.js.LICENSE.txt": "/CookieClickerTest/static/js/2.9b71943b.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.0599430e.js",
+    "static/js/runtime-main.6d9222ff.js",
     "static/js/2.9b71943b.chunk.js",
     "static/css/main.f1bd67f7.chunk.css",
     "static/js/main.48c4a24c.chunk.js"
