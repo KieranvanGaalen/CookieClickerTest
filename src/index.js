@@ -4,9 +4,23 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+class Doc extends React.Component{
+  componentDidMount(){
+    document.title = "Cookie Clicker"
+  }
+
+  render(){
+    return(
+      <React.StrictMode>
+      <App />
+      </React.StrictMode>
+    )
+  }
+}
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Doc />
   </React.StrictMode>,
   document.getElementById('root')
 );
