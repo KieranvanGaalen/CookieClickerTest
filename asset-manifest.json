@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/CookieClickerTest/static/css/main.18a989c2.chunk.css",
-    "main.js": "/CookieClickerTest/static/js/main.df6bf02d.chunk.js",
-    "main.js.map": "/CookieClickerTest/static/js/main.df6bf02d.chunk.js.map",
+    "main.js": "/CookieClickerTest/static/js/main.99eb8b03.chunk.js",
+    "main.js.map": "/CookieClickerTest/static/js/main.99eb8b03.chunk.js.map",
     "runtime-main.js": "/CookieClickerTest/static/js/runtime-main.80e142cc.js",
     "runtime-main.js.map": "/CookieClickerTest/static/js/runtime-main.80e142cc.js.map",
     "static/js/2.b26b62cc.chunk.js": "/CookieClickerTest/static/js/2.b26b62cc.chunk.js",
@@ -11,12 +11,13 @@
     "static/js/3.9f9b9200.chunk.js.map": "/CookieClickerTest/static/js/3.9f9b9200.chunk.js.map",
     "index.html": "/CookieClickerTest/index.html",
     "static/css/main.18a989c2.chunk.css.map": "/CookieClickerTest/static/css/main.18a989c2.chunk.css.map",
-    "static/js/2.b26b62cc.chunk.js.LICENSE.txt": "/CookieClickerTest/static/js/2.b26b62cc.chunk.js.LICENSE.txt"
+    "static/js/2.b26b62cc.chunk.js.LICENSE.txt": "/CookieClickerTest/static/js/2.b26b62cc.chunk.js.LICENSE.txt",
+    "static/media/Cookie.7051ee39.png": "/CookieClickerTest/static/media/Cookie.7051ee39.png"
   },
   "entrypoints": [
     "static/js/runtime-main.80e142cc.js",
     "static/js/2.b26b62cc.chunk.js",
     "static/css/main.18a989c2.chunk.css",
-    "static/js/main.df6bf02d.chunk.js"
+    "static/js/main.99eb8b03.chunk.js"
   ]
 }
