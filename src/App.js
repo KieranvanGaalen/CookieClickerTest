@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import cookiePicture from "./Cookie.png";
 
 var cookies = 0;
 var cps = 0;
@@ -29,11 +30,6 @@ function App() {
     }, gameTickDelta);
   }, []);
 
-  //for (var i = 0; i < generators.length; i++)
-  //{
-  //  SetGeneratorUpdate(generators[i])
-  //}
-
   return (
     <div className="App">
       <body>
@@ -43,7 +39,7 @@ function App() {
 
         <input 
         type="image" 
-        src="https://static.hanos.com/sys-master/productimages/h39/hb7/9255815512094/33200290_lev_b.jpg_914Wx914H" 
+        src={cookiePicture} 
         onClick={ClickCookie}
         width = "169"
         height= "169" /> 
